@@ -52,8 +52,9 @@
     #api button.accountButton{
       width: 200px;
       position: relative;
-      padding: 20px;
+      padding: 20px 20px 20px 50px;
       font-size: 1.2rem;
+      border: 0;
     }
 
     #api button.accountButton::before{
@@ -71,6 +72,9 @@
     #api button#FacebookExchange::before{
       content: "\f082";
     }
+    #api button#FacebookExchange:hover{
+      background: #5573B2;
+    }
 
     #api button#GoogleExchange{
       background: #d62d20;
@@ -79,6 +83,9 @@
     #api button#GoogleExchange::before{
       content: "\f0d4";
     }
+    #api button#GoogleExchange:hover{
+      background: #F0473A;
+    }
 
     #api button#MicrosoftAccountExchange{
       background:	#04a5f0;
@@ -86,6 +93,9 @@
     }
     #api button#MicrosoftAccountExchange::before{
       content: "\f3ca";
+    }
+    #api button#MicrosoftAccountExchange:hover{
+      background: #1EBFFF;
     }
 
     #api label{
