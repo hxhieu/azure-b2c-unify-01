@@ -3,15 +3,188 @@
 
 <head>
   <title>Simple Azure B2C Sign On</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <style>
-    body {
+    html,body{
+      background: #eee;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Open Sans', 'sans-serif';
+      font-size: 14px;
+    }
+    .main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .container .logo{
+      text-align: center;
+    }
+    .container .logo img{
+      width: 240px;
+    }
+    #api {
+      padding: 20px 40px;
+      margin: 20px 0;
+      background: #fff;
+    }
+
+    #api .social{
+      text-align: center;
+    }
+
+    #api button{
+      padding: 10px 20px;
+      margin: 10px 0;
+      border-radius: 3px;
+      border: 1px solid #aaa;
       background: #ddd;
+    }
+
+    #api button:hover{
+      background: #eee;
+    }
+
+    #api button.accountButton{
+      width: 200px;
+      position: relative;
+      padding: 20px;
+      font-size: 1.2rem;
+    }
+
+    #api button.accountButton::before{
+      font-family: 'Font Awesome 5 Brands';
+      position: absolute;
+      left: 10px;
+      font-size: 3rem;
+      top: 6px;
+    }
+
+    #api button#FacebookExchange{
+      background: #3b5998;
+      color: #fff;
+    }
+    #api button#FacebookExchange::before{
+      content: "\f082";
+    }
+
+    #api button#GoogleExchange{
+      background: #d62d20;
+      color: #fff;
+    }
+    #api button#GoogleExchange::before{
+      content: "\f0d4";
+    }
+
+    #api button#MicrosoftAccountExchange{
+      background:	#04a5f0;
+      color: #fff;
+    }
+    #api button#MicrosoftAccountExchange::before{
+      content: "\f3ca";
+    }
+
+    #api label{
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #api input{
+      display: block;
+      border: 1px solid #aaa;
+      width: 100%;
+      height: 2rem;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      padding: 0 10px;
     }
   </style>
 </head>
 
 <body>
-  <div id="api"></div> <!-- Leave this element empty because Azure AD B2C will insert content here. -->
+  <div class="main">
+    <div class="container">
+      <div class="logo">
+        <img src="logo.png">
+      </div>
+      <!-- <div id="api"></div> -->
+      <div id="api" data-name="Unified">
+        <div class="social" aria-label="Sign in with your social account" role="form">
+          <div class="intro">
+            <h2>Sign in with your social account</h2>
+          </div>
+          <div class="options">
+            <div>
+              <button class="accountButton firstButton" id="FacebookExchange" tabindex="1">Facebook</button>
+            </div>
+            <div>
+              <button class="accountButton" id="GoogleExchange" tabindex="1">Google</button>
+            </div>
+            <div>
+              <button class="accountButton" id="MicrosoftAccountExchange" tabindex="1">Microsoft</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider">
+          <h2>OR</h2>
+        </div>
+
+        <div class="localAccount" aria-label="Sign in with your existing account" role="form">
+          <div class="intro">
+            <h2>
+              Sign in with your existing account
+            </h2>
+          </div>
+          <div class="error pageLevel" aria-hidden="true" style="display: none;">
+            <p role="alert"></p>
+          </div>
+          <div class="entry">
+            <div class="entry-item">
+              <label for="logonIdentifier">
+                Email Address
+              </label>
+              <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                <p role="alert"></p>
+              </div>
+              <input type="email" id="logonIdentifier" name="Username or email address" pattern="^[a-zA-Z0-9.!#$%&amp;’'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+                placeholder="Email Address" value="" tabindex="1">
+            </div>
+            <div class="entry-item">
+              <div class="password-label">
+                <label for="password">Password</label>
+                <a id="forgotPassword" tabindex="2" href="/skillsso.onmicrosoft.com/B2C_1_susi/api/CombinedSigninAndSignup/forgotPassword?csrf_token=TG14aS9CVExLa3lPQ1Zya0VpNWpobHhiQ2w3MDRob2lYNTg4RXViQ2pmZmRxQ0J6b3FmY3FTUzYzVjRjQmE1Z24wckl0Vy9jbXk5dWxwM3NWZXFtSFE9PTsyMDE4LTA5LTE2VDIyOjMwOjE2Ljg0Njk4ODNaO3hUelNDeThXRUdGa1E5aGRtK3RGbmc9PTt7Ik9yY2hlc3RyYXRpb25TdGVwIjoxfQ==&amp;tx=StateProperties=eyJUSUQiOiJlZGI0MGY4MC1kZmZkLTQ4NWQtOGEwMy01YWVlZjZmOWU0YzcifQ&amp;p=B2C_1_susi">Forgot
+                  your password?</a>
+              </div>
+              <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                <p role="alert"></p>
+              </div>
+              <input type="password" id="password" name="Password" placeholder="Password" tabindex="1">
+            </div>
+            <div class="working"></div>
+            <div class="buttons">
+              <button id="next" tabindex="1">Sign in</button>
+            </div>
+          </div>
+
+          <div class="divider">
+            <h2>OR</h2>
+          </div>
+          <div class="create">
+            <p>
+              Don't have an account?<a id="createAccount" tabindex="1" href="/skillsso.onmicrosoft.com/B2C_1_susi/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=TG14aS9CVExLa3lPQ1Zya0VpNWpobHhiQ2w3MDRob2lYNTg4RXViQ2pmZmRxQ0J6b3FmY3FTUzYzVjRjQmE1Z24wckl0Vy9jbXk5dWxwM3NWZXFtSFE9PTsyMDE4LTA5LTE2VDIyOjMwOjE2Ljg0Njk4ODNaO3hUelNDeThXRUdGa1E5aGRtK3RGbmc9PTt7Ik9yY2hlc3RyYXRpb25TdGVwIjoxfQ==&amp;tx=StateProperties=eyJUSUQiOiJlZGI0MGY4MC1kZmZkLTQ4NWQtOGEwMy01YWVlZjZmOWU0YzcifQ&amp;p=B2C_1_susi">Sign
+                up now</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
